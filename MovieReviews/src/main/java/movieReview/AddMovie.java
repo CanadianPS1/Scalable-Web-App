@@ -1,12 +1,6 @@
 package movieReview;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Scanner;
-import java.util.ArrayList;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,16 +15,10 @@ public class AddMovie extends HttpServlet{
         //for the get
         //declares all my url vars and my 2 number vars
         String movieName = request.getParameter("movename");
-        ArrayList <String> movieList = new ArrayList<>();
-        //implement file io stuff
-        movieList.add(movieName);
-        //implement file saving
+        new GetAllMovies().AddMovie(movieName);
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + movieName + " Saved</h1>");
         out.println("</body></html>");
-
-        
-        
     }   
 }

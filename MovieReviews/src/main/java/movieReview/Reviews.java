@@ -15,7 +15,7 @@ public class Reviews extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         //for the get
         //declares all my url vars and my 2 number vars
-        //String num1String = request.getParameter("search");
+        String num1String = request.getParameter("search");
         
     }   
 }

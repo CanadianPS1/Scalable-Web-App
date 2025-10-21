@@ -26,7 +26,7 @@ public class Search extends HttpServlet{
         //file io
         //implement file io stuff
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(new File("movies.json"));
+        JsonNode jsonNode = objectMapper.readTree(new File("C:\\Users\\spiel\\Documents\\GitHub\\Scalable-Web-App\\MovieReviews\\src\\main\\java\\movieReview\\movies.json"));
         for(int i = 0; i < jsonNode.size(); i++){
             GetAllMovies movieGetter = new GetAllMovies().MovieGetter(i + 1);;
             movieList.add(movieGetter);

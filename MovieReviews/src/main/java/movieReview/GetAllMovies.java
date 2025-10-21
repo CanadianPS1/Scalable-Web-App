@@ -1,15 +1,22 @@
 package movieReview;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.File;
-import java.io.IOException;
 public class GetAllMovies {
     private String name;
     private String reviews;
+    private final int size;
+    public GetAllMovies() throws IOException{
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(new File("/movies.json"));
+        size = jsonNode.size();
+    }
     public GetAllMovies MovieGetter(int location) throws IOException{
         /*ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(new File("mydata.json"));
@@ -19,7 +26,7 @@ public class GetAllMovies {
         String state = jsonNode.get("state").asText();
         String country = jsonNode.get("country").asText(); */
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(new File("movies.json"));
+        JsonNode jsonNode = objectMapper.readTree(new File("/movies.json"));
         if(jsonNode.size() <= location){
             JsonNode item = jsonNode.get(location - 1);
             name = item.get("name").asText();
@@ -33,8 +40,11 @@ public class GetAllMovies {
         ObjectNode jsonNode = objectMapper.createObjectNode();
         jsonNode.put("name", name);
         jsonNode.put("reviews", "");
-        objectMapper.writeValue(new File("movies.json"), jsonNode);
+        objectMapper.writeValue(new File("/movies.json"), jsonNode);
         return null;
+    }
+    public int getSize(){
+        return size;
     }
     public String getName(){
         return name;

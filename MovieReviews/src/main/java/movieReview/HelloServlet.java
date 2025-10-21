@@ -7,16 +7,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 @WebServlet(name = "movie-review", value = "/movie-review")
 public class HelloServlet extends HttpServlet {
     private String message;
-
+    @SuppressWarnings("override")
     public void init() {
         message = "Hello World!";
     }
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)  throws IOException{
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response)  throws IOException{
         response.setContentType("text/html");
 
         PrintWriter out = response.getWriter();
@@ -24,7 +23,7 @@ public class HelloServlet extends HttpServlet {
         out.println("<h1>" + message + "</h1>");
         out.println("</body></html>");
     }
-
+    @SuppressWarnings("override")
     public void destroy() {
     }
 }

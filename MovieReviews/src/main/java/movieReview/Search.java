@@ -1,12 +1,8 @@
 package movieReview;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,10 +21,8 @@ public class Search extends HttpServlet{
         ArrayList<GetAllMovies> movieList = new ArrayList<>();
         //file io
         //implement file io stuff
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(new File("C:\\Users\\spiel\\Documents\\GitHub\\Scalable-Web-App\\MovieReviews\\src\\main\\java\\movieReview\\movies.json"));
-        for(int i = 0; i < jsonNode.size(); i++){
-            GetAllMovies movieGetter = new GetAllMovies().MovieGetter(i + 1);;
+        for(int i = 0; i < new GetAllMovies().getSize(); i++){
+            GetAllMovies movieGetter = new GetAllMovies().MovieGetter(i + 1);
             movieList.add(movieGetter);
         }
         for(int i = 0; i < movieList.size(); i++){

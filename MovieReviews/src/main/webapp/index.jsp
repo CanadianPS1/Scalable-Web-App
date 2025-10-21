@@ -13,11 +13,10 @@
         <meta property="og:description" content="HomePageForMovieReview">
         <meta property="og:type" content="website">
         <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmls='http://www.w3.org/2000/svg' viewbox= '0>">
-        <link rel="stylesheet" href="index.css">
         <title>IMDB</title>
     </head>
     <body>
-        <header class="header" style="display: flex;">
+        <header class="header">
             <h1>
                 <button>IMDB</button>
             </h1>
@@ -32,5 +31,4 @@
             
         </main>
     </body>
-    <footer>Copyright ©2025 by Lia Roeback</footer>
 </html>

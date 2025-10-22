@@ -14,7 +14,7 @@ public class AddMovie extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         //for the get
         //declares all my url vars and my 2 number vars
-        String movieName = request.getParameter("movename");
+        String movieName = request.getParameter("movie");
         new GetAllMovies().AddMovie(movieName);
         PrintWriter out = response.getWriter();
         out.println("<html><body>");

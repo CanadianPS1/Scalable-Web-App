@@ -25,6 +25,10 @@
                     <input type="text" name="search">
                     <input type="submit" value="SEARCH"/>
                 </form>
+                <form method="POST" action="/add-movie">
+                    <input type="text" name="movie">
+                    <input type="submit" value="ADD MOVIE"/>
+                </form>
             </h2>
         </header>
         <main id="main-content" role="main">

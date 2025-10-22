@@ -2,6 +2,7 @@ package movieReview;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
@@ -14,10 +15,11 @@ public class GetAllMovies {
     private final int size;
     public GetAllMovies() throws IOException{
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(new File("/movies.json"));
+        InputStream inputStream = getClass().getResourceAsStream("/movies.json");
+        JsonNode jsonNode = objectMapper.readTree(inputStream);
         size = jsonNode.size();
     }
-    public GetAllMovies MovieGetter(int location) throws IOException{
+    public GetAllMovies(int location) throws IOException{
         /*ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(new File("mydata.json"));
         String name = jsonNode.get("name").asText();
@@ -26,22 +28,22 @@ public class GetAllMovies {
         String state = jsonNode.get("state").asText();
         String country = jsonNode.get("country").asText(); */
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(new File("/movies.json"));
-        if(jsonNode.size() <= location){
+        InputStream inputStream = getClass().getResourceAsStream("/movies.json");
+        JsonNode jsonNode = objectMapper.readTree(inputStream);
+        size = jsonNode.size();
+        if(jsonNode.size() >= location){
             JsonNode item = jsonNode.get(location - 1);
             name = item.get("name").asText();
             reviews = item.get("reviews").asText();
         }
-        return null;
     }
     //https://www.geeksforgeeks.org/java/how-to-read-and-write-json-files-in-java/
-    public GetAllMovies AddMovie(String name) throws StreamWriteException, DatabindException, IOException{
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode jsonNode = objectMapper.createObjectNode();
-        jsonNode.put("name", name);
-        jsonNode.put("reviews", "");
+    public void AddMovie(String name) throws StreamWriteException, DatabindException, IOException{
+        ObjectMapper objectMapper = new ObjectMapper(); 
+        ObjectNode jsonNode = objectMapper.createObjectNode(); 
+        jsonNode.put("name", name); 
+        jsonNode.put("reviews", ""); 
         objectMapper.writeValue(new File("/movies.json"), jsonNode);
-        return null;
     }
     public int getSize(){
         return size;

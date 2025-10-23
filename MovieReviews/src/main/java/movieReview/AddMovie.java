@@ -9,13 +9,12 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "add-movie", value = "/add-movie")
 public class AddMovie extends HttpServlet{
     @Override
-    @SuppressWarnings("UseSpecificCatch")
-    //handles the get requests
+    @SuppressWarnings({ "UseSpecificCatch", "static-access" })
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        //for the get
-        //declares all my url vars and my 2 number vars
         String movieName = request.getParameter("movie");
-        new GetAllMovies().AddMovie(movieName);
+        //adds a new movie to our static ad movie method whichs calls the non static addmovie method with the given movie name
+        new GetAllMovies().AddMovieToAllMovies(new GetAllMovies().AddMovie(movieName));
+        //echos info to the user
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + movieName + " Saved</h1>");

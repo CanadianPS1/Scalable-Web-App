@@ -12,21 +12,18 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "search", value = "/search")
 public class Search extends HttpServlet{
     @Override
-    @SuppressWarnings("UseSpecificCatch")
-    //handles the get requests
+    @SuppressWarnings({ "UseSpecificCatch", "static-access", "unchecked" })
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        //for the get
-        //declares all my url vars and my 2 number vars
+        //makes my vars
         String search = request.getParameter("search");
-        ArrayList<GetAllMovies> movieList = new ArrayList<>();
-        for(int i = 0; i < new GetAllMovies().getSize(); i++){
-            movieList.add(new GetAllMovies(i + 1));
-        }
+        ArrayList<GetAllMovies> movieList;
+        movieList = new GetAllMovies().GetAllMoviesList();
+        //loops through all the movies and returns any that have the given string of text in their names
         for(int i = 0; i < movieList.size(); i++){
-            if(movieList.get(i).getName().toLowerCase().contains(search.toLowerCase())){
-                PrintWriter out = response.getWriter();
-                out.println(movieList.get(i).getName() + "");
-            }
+                if(movieList.get(i).getName().toLowerCase().contains(search.toLowerCase())){
+                    PrintWriter out = response.getWriter();
+                    out.println(movieList.get(i).getName() + "");
+                }
         }
 
         

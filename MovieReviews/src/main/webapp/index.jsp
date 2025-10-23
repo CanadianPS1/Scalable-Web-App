@@ -29,6 +29,11 @@
                     <input type="text" name="movie">
                     <input type="submit" value="ADD MOVIE"/>
                 </form>
+                <form method="POST" action="/reviews">
+                    <input type="text" name="review" value="Review">
+                    <input type="test" name="movie" value="Movie">
+                    <input type="submit" value="Reviews/AddReview"/>
+                </form>
             </h2>
         </header>
         <main id="main-content" role="main">

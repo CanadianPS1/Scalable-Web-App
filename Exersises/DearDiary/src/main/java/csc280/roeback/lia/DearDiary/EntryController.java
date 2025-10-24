@@ -3,9 +3,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import ch.qos.logback.core.joran.spi.HttpUtil.RequestMethod;
 @RestController
 @RequestMapping("/entry")
 public class EntryController{

@@ -1,5 +1,6 @@
-package csc280.roeback.lia.DearDiary;
+package Exersises.DearDiaryAPI.src.main.java.csc280.roeback.lia.DearDiary;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,5 +14,9 @@ public class EntryController{
     public void createEntry(@RequestBody DiaryEntry entry){
         entry.setCreateDate(LocalDateTime.now().toString());
         diary.entries.add(entry);
+    }
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<DiaryEntry> findAllMessages(){
+        return diary.findAll();
     }
 }

@@ -1,4 +1,4 @@
-package csc280.roeback.lia.DearDiary;
+package Exersises.DearDiaryAPI.src.main.java.csc280.roeback.lia.DearDiary;
 public class DiaryEntry{
     private int id;
     private String text;

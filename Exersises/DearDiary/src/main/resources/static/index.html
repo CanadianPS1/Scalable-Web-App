@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <title>Diary</title>
+    <h1>Lia's Daily Diary</h1>
+ 
+</head>
+ 
+<body>
+    <div>
+        <ul id="entry_list"></ul>
+    </div>
+    <div>
+        <label>Journal Entry Num:</label>
+        <input type="text" style="width:20px" id="entry_id" />
+        <br />
+        <label>New Journal Entry: </label>
+        <textarea rows="8" cols="20" id="entry_text"></textarea>
+        <br /> <br />
+        <button onclick="createMessage();">Add Entry</button>
+        <br /><br />
+        <button onclick="getMessages();">Get All</button>
+    </div>  
+</body>
+<footer>
+    <script type="text/javascript">
+ 
+        function getMessages() {
+            console.log("getEntries");
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function () {
+                if (this.readyState == XMLHttpRequest.DONE && this.status === 200) {
+                    var entries = JSON.parse(this.responseText);
+                    renderEntries(entries);
+                }
+            }
+            xmlHttp.open("GET", "http://localhost:8080/entry", true);
+            xmlHttp.send();
+ 
+        }
+ 
+        //display messages in bullet points in <ul>
+        function renderEntries(entries) {
+            console.log("renderEntries()");
+            var entry_list = document.getElementById("entry_list");
+            entry_list.innerHTML = "";
+            for (var entry of entries) {
+                var entry_html = "<li>" + entry.text + "</li>";
+                entry_list.innerHTML = entry_list.innerHTML + entry_html;
+            }
+            entry_id.value = "";
+            entry_text.value = "";
+        }
+ 
+        window.onload = function () {
+            console.log("page loading");
+            getMessages();
+        }
+ 
+        function createMessage() {
+            console.log("into createMessage");
+            var id = document.getElementById("entry_id").value;
+            var text = document.getElementById("entry_text").value;
+            var entry = {
+                "id": id,
+                "text": text
+            }
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("POST", "http://localhost:8080/entry");
+            xmlHttp.setRequestHeader("Content-Type", "application/json");
+            xmlHttp.onreadystatechange = function () {
+                if (this.readyState == XMLHttpRequest.DONE && this.status === 200) {
+                    //adding message is done, show results
+                    getMessages();
+                }
+            }
+            xmlHttp.send(JSON.stringify(entry));
+        }
+ 
+    </script>
+</footer>
+</html>

@@ -1,10 +1,10 @@
-package csc280.roeback.lia.DearDiary;
+package csc180.roeback.lia.DearDiaryAPI;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DearDiaryApplicationTests {
+class DearDiaryApiApplicationTests {
 
 	@Test
 	void contextLoads() {

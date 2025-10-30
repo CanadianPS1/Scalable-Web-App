@@ -1,16 +1,13 @@
-package Exersises.DearDiaryAPI.src.main.java.csc280.roeback.lia.DearDiary;
-
-
-import java.beans.BeanProperty;
-
+package csc180.roeback.lia.DearDiaryAPI;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 @SpringBootApplication
-public class DearDiaryApplication {
+public class DearDiaryApiApplication {
 	public static void main(String [] args){
-		SpringApplication.run(DearDiaryApplication.class, args);
+		SpringApplication.run(DearDiaryApiApplication.class, args);
 	}
 	@Bean
     public WebMvcConfigurer corsConfigurer(){

@@ -1,4 +1,4 @@
-package Exersises.DearDiaryAPI.src.main.java.csc280.roeback.lia.DearDiary;
+package csc180.roeback.lia.DearDiaryAPI;
 import java.util.ArrayList;
 import java.util.List;
 public class Diary{

@@ -9,14 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/entry")
 public class EntryController{
-    private Diary diary = new Diary();
+    @SuppressWarnings("unused")
+    private final Diary diary = new Diary();
     @RequestMapping(path = "", method = RequestMethod.POST)
     public void createEntry(@RequestBody DiaryEntry entry){
         entry.setCreateDate(LocalDateTime.now().toString());
-        diary.entries.add(entry);
+        //diary.add(entry);
+        DiaryRestDataSQL.add(entry);
+        
     }
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<DiaryEntry> findAllMessages(){
-        return diary.findAll();
+        //return diary.findAll();
+        return DiaryRestDataSQL.getAll();
     }
 }

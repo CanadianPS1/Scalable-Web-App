@@ -12,6 +12,7 @@ public class DearDiaryApiApplication {
 	@Bean
     public WebMvcConfigurer corsConfigurer(){
         return new WebMvcConfigurer() {
+            @SuppressWarnings("null")
             @Override public void addCorsMappings(CorsRegistry registry){
                 //registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
                 registry.addMapping("/**").allowedOrigins("http://localhost:8080").allowedMethods("*");

@@ -7,11 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 public class DiaryRestDataSQL {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306";
+    private static final String DB_URL =  "jdbc:mysql://localhost:3306/deardiaryMySQL?createDatabaseIfNotExist=TRUE&allowPublicKeyRetrieval=TRUE&useSSL=FALSE";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "abc123";
     @SuppressWarnings("CallToPrintStackTrace")
     public static String add(DiaryEntry entry){
+        
         String SQL = String.format(
                 "INSERT INTO diaryentries ( `id`, `text`, `createdate`) VALUES ('%s', '%s', '%s');",
                 entry.getId(), entry.getText(), entry.getCreateDate());

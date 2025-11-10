@@ -16,6 +16,7 @@ public class Book{
     @ManyToOne
     @JsonIgnore
     private Store store;
+    public Book(){}
     public Book(long id, LocalDateTime updateOn, String description, String author){
         this.id = id;
         this.updateOn = updateOn;
@@ -30,6 +31,12 @@ public class Book{
     }
     public LocalDateTime getUpdateOn(){
         return updateOn;
+    }
+    public Store getStore(){
+        return store;
+    }
+    public void setStore(Store s){
+        store = s;
     }
     public void setUpdateOn(LocalDateTime updateOn){
         this.updateOn = updateOn;

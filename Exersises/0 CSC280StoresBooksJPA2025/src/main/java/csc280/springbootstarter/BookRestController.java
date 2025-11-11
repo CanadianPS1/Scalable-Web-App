@@ -6,6 +6,7 @@ import org.springframework.http.*;
 import org.springframework.transaction.annotation.Transactional;
 @RestController
 @RequestMapping("/book")
+@SuppressWarnings("unused")
 public class BookRestController{
     @Autowired
     private BookJPARepository bookRepo;

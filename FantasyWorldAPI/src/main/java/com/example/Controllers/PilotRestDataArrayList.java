@@ -12,4 +12,20 @@ public class PilotRestDataArrayList{
     public static ArrayList<Pilot> getAll(){
         return pilots;
     }
+    public static Pilot getById(int id){
+        return pilots.stream().filter(pilot -> pilot.getPilotID() == id).findFirst().orElse(null);
+    }
+    public static Pilot update(Pilot pilot){
+        Pilot tempPilot = pilots.stream().filter(i -> i.getPilotID() == pilot.getPilotID()).findFirst().orElse(null);
+        if(tempPilot != null){
+            pilots.remove(tempPilot);
+            pilots.add(pilot);
+            return pilot;
+        }
+        return null;
+    }
+    public static String delete(int id){
+        return pilots.removeIf(pilot -> pilot.getPilotID() == id) ? "Removed" : "Not Found";
+    }
+
 }

@@ -2,7 +2,7 @@ package com.example.Controllers;
 import com.example.Models.*;
 import java.util.List;
 // import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,5 +17,17 @@ public class PilotRestController{
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Pilot> getAll(){
         return PilotRestDataArrayList.getAll();
+    }
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public Pilot findById(@PathVariable int id){
+        return PilotRestDataArrayList.getById(id);
+    }
+    @RequestMapping(path = "", method = RequestMethod.PUT)
+    public Pilot updateById(@RequestBody Pilot pilot){
+        return PilotRestDataArrayList.update(pilot);
+    }
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public String delete(@PathVariable int id){
+        return PilotRestDataArrayList.delete(id);
     }
 }

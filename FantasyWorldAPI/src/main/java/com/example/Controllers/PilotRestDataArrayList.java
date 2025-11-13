@@ -21,8 +21,7 @@ public class PilotRestDataArrayList{
             pilots.remove(tempPilot);
             pilots.add(pilot);
             return pilot;
-        }
-        return null;
+        }else return null;
     }
     public static String delete(int id){
         return pilots.removeIf(pilot -> pilot.getPilotID() == id) ? "Removed" : "Not Found";

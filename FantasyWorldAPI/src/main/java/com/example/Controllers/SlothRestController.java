@@ -8,26 +8,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
-@RequestMapping("/pilot")
-public class PilotRestController{
+@RequestMapping("/sloth")
+public class SlothRestController{
     @RequestMapping(path = "", method = RequestMethod.POST)
-    public String create(@RequestBody Pilot pilot){
-        return PilotRestDataArrayList.add(pilot);
+    public String create(@RequestBody Sloth sloth){
+        return SlothRestDataArrayList.add(sloth);
     }
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<Pilot> getAll(){
-        return PilotRestDataArrayList.getAll();
+    public List<Sloth> getAll(){
+        return SlothRestDataArrayList.getAll();
     }
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Pilot findById(@PathVariable int id){
-        return PilotRestDataArrayList.getById(id);
+    public Sloth findById(@PathVariable int id){
+        return SlothRestDataArrayList.getById(id);
     }
     @RequestMapping(path = "", method = RequestMethod.PUT)
-    public Pilot updateById(@RequestBody Pilot pilot){
-        return PilotRestDataArrayList.update(pilot);
+    public Sloth updateById(@RequestBody Sloth sloth){
+        return SlothRestDataArrayList.update(sloth);
     }
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public String delete(@PathVariable int id){
-        return PilotRestDataArrayList.delete(id);
+        return SlothRestDataArrayList.delete(id);
     }
 }

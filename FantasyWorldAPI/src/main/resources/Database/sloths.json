@@ -1,23 +1,16 @@
-[ 
-    {
-        "slothID" : 1,
-        "name" : "chris",
-        "slothLevel" : 6,
-        "slothSpeed" : 7
-    }, {
-        "slothID" : 2,
-        "name" : "Bennen",
-        "slothLevel" : 2,
-        "slothSpeed" : 2
-    }, {
-        "slothID" : 3,
-        "name" : "Gorbachev",
-        "slothLevel" : 10,
-        "slothSpeed" : 11
-    }, {
-        "slothID" : 1,
-        "name" : "Gatric",
-        "slothLevel" : 1,
-        "slothSpeed" : 1
-    } 
-]
+[ {
+  "slothLevel" : 6,
+  "slothID" : 1,
+  "name" : "chris",
+  "slothSpeed" : 7
+}, {
+  "slothLevel" : 2,
+  "slothID" : 2,
+  "name" : "Bennen",
+  "slothSpeed" : 2
+}, {
+  "slothLevel" : 10,
+  "slothID" : 3,
+  "name" : "Gorbachev",
+  "slothSpeed" : 11
+} ]

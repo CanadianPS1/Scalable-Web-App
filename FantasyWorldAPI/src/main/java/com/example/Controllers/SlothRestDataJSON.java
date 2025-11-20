@@ -10,8 +10,34 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 public class SlothRestDataJSON{
-    private static final File jsonFile = new File("src/main/resources/Database/sloth.json");    
+    private static final File jsonFile = new File("Scalable-Web-App\\FantasyWorldAPI\\src\\main\\resources\\Database\\sloths.json");    
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    public static synchronized Sloth update(Sloth sloth) throws IOException {
+        List<Sloth> sloths = getAllInternal();
+        for (Sloth tempSloth : sloths){
+            if (tempSloth.getSlothID() == sloth.getSlothID()){
+                sloths.remove(tempSloth);
+                sloths.add(sloth);
+                saveFile(sloths);
+                return sloth;
+            };
+        }
+        return null;
+    }
+    public static synchronized String delete(int slothID) throws IOException {
+        List<Sloth> sloths = getAllInternal();
+        for(Sloth sloth : sloths){
+            if(sloth.getSlothID() == slothID){
+                sloths.remove(sloth);
+                saveFile(sloths);
+                return "Sloth Removed";
+            }
+        }
+        return "No Sloth Found";
+    }
+    public static synchronized List<Sloth> getAll() throws IOException {
+        return getAllInternal();
+    }
     public static synchronized Sloth findById(int slothID) throws IOException {
         for (Sloth sloth : getAllInternal()){
             if (sloth.getSlothID() == slothID) return sloth;

@@ -176,7 +176,7 @@
             }
             for(const sloth of sloths){
                 const li = document.createElement('li');
-                li.textContent = `ID: ${sloth.slothID} | Level: ${sloth.slothLevel} | Name ${sloth.name} | Speed: ${sloth.speed}`;
+                li.textContent = `ID: ${sloth.slothID} | Level: ${sloth.slothLevel} | Name ${sloth.name} | Speed: ${sloth.slothSpeed}`;
                 list.appendChild(li);
             }
         }
@@ -188,7 +188,7 @@
                 return;
             }
             const li = document.createElement('li');
-            li.textContent = `ID: ${sloth.slothID} | Level: ${sloth.slothLevel} | Name: ${sloth.name} | Speed ${sloth.speed}`;
+            li.textContent = `ID: ${sloth.slothID} | Level: ${sloth.slothLevel} | Name: ${sloth.name} | Speed ${sloth.slothSpeed}`;
             list.appendChild(li);
         }
         function showMessage(elementId, text, isError = false){
@@ -234,7 +234,7 @@
             const entry = {
                 slothID: parseInt(id,10),
                 slothLevel: parseInt(level,10),
-                speed: parseInt(speed,10),
+                slothSpeed: parseInt(speed,10),
                 name: slothName
             };
             try{
@@ -246,9 +246,9 @@
                 const text = await response.text();
                 if(!response.ok) throw new Error('Server returned status ' + response.status);
                 showMessage('createUpdateMessage', 'Create: ' + text);
-                await getAllTrees();
+                await getAllSloths();
             } catch (err) {
-                showMessage('createUpdateMessage', 'Error creating tree: ' + err.message, true);
+                showMessage('createUpdateMessage', 'Error creating Sloth: ' + err.message, true);
             }
         }
         async function deleteSloth(){
@@ -283,12 +283,12 @@
             const entry = {
                 slothID: parseInt(id, 10),
                 slothLevel: parseInt(level, 10),
-                speed: parseInt(speed, 10),
+                slothSpeed: parseInt(speed, 10),
                 name: name
             };
             try{
                 const response = await fetch(slothUrl, {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(entry)
                 });
@@ -479,7 +479,7 @@
             };
             try{
                 const response = await fetch(treeUrl, {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(entry)
                 });
@@ -636,7 +636,7 @@
             const text = await response.text();
             if(!response.ok) throw new Error('Server returned status ' + response.status);
             showMessage('createUpdateMessage', 'Create: ' + text);
-            await getAllTrees();
+            await getAllJungles();
         } catch (err) {
             showMessage('createUpdateMessage', 'Error creating tree: ' + err.message, true);
         }
@@ -664,7 +664,35 @@
         }
     }
     async function updateJungle(){
-    
+        const id = document.getElementById('txtJungleID').value;
+        const size = document.getElementById('txtJungleSize').value;
+        const name = document.getElementById('txtJungleName').value;
+        const slothID = document.getElementById('txtJunglesSlothID').value;
+        const treeID = document.getElementById('txtJunglesTreeID').value;
+        if(!id) return showMessage('createUpdateMessage', 'ID and Name are required for create.', true);
+        const entry = {
+            jungleID: parseInt(id,10),
+            jungleSize: parseInt(size,10),
+            jungleName: name + "",
+            treeID: parseInt(treeID,10),
+            slothID: parseInt(slothID,10)
+        };
+        try{
+            const response = await fetch(jungleUrl, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(entry)
+            });
+            const text = await response.text();
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            const verifyResponse = await fetch(`${jungleUrl}/${id}`);
+            const createdJungle = await verifyResponse.json();
+            renderSingleJungle(createdJungle);
+            showMessage('createUpdateMessage', 'Created: ' + text);
+        }catch(err){
+            renderSingleJungle(null);
+            showMessage('createUpdateMessage', 'Error creating jungle: ' + err.message, true);
+        }
     }
 </script>
 </body>

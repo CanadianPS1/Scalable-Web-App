@@ -1,13 +1,15 @@
 package com.example.Models;
 import java.io.Serializable;
 public class Jungle implements Serializable{
-    int jungleID, jungleSize;
+    int jungleID, jungleSize, slothID, treeID;
     String jungleName;
     public Jungle(){};
-    public Jungle(int jungleID, String jungleName, int jungleSize){
+    public Jungle(int jungleID, String jungleName, int jungleSize, int slothID, int treeID){
         this.jungleID = jungleID;
         this.jungleName = jungleName;
         this.jungleSize = jungleSize;
+        this.slothID = slothID;
+        this.treeID = treeID;
     }
     public int getJungleID(){
         return jungleID;
@@ -26,5 +28,21 @@ public class Jungle implements Serializable{
     }
     public void setJungleName(String jungleName){
         this.jungleName = jungleName;
+    }
+
+    public int getSlothID(){
+        return slothID;
+    }
+
+    public void setSlothID(int slothID){
+        this.slothID = slothID;
+    }
+
+    public int getTreeID(){
+        return treeID;
+    }
+
+    public void setTreeID(int treeID){
+        this.treeID = treeID;
     }
 }

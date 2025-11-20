@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tree CRUD Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+        }
+
+        main {
+            padding: 1.5rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem;
+            flex: 1 1 320px;
+            min-width: 300px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.5rem;
+        }
+
+        label {
+            display: inline-block;
+            width: 110px;
+            margin: 0.25rem 0;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            padding: 0.25rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 0.35rem 0.8rem;
+            margin: 0.25rem 0.25rem 0.25rem 0;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            background: #3498db;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        button.secondary {
+            background: #7f8c8d;
+        }
+
+        button.danger {
+            background: #e74c3c;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding: 0.35rem 0.25rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .message {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .message.error {
+            color: #e74c3c;
+        }
+
+        .small {
+            font-size: 0.8rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Tree CRUD Demo</h1>
+</header>
+
+<main>
+
+    <section class="card">
+        <h2>Create / Update Sloth</h2>
+        <div>
+            <label for="txtSSlothID">Sloth ID:</label>
+            <input type="number" id="txtSSlothID" />
+        </div>
+        <div>
+            <label for="txtLevel">Sloth Level:</label>
+            <input type="number" id="txtLevel" />
+        </div>
+        <div>
+            <label for="txtSpeed">Speed:</label>
+            <input type="number" id="txtSpeed" />
+        </div>
+        <div>
+            <label for="txtSlothName">Name:</label>
+            <input type="number" id="txtSlothName" />
+        </div>
+        <div style="margin-top:0.5rem;">
+            <button onclick="createSloth()">Create (POST)</button>
+            <button onclick="updateSloth()" class="secondary">Update (PUT)</button>
+        </div>
+
+        <p class="small">
+            Note: ID must be unique on create. On update, an existing ID will be replaced with the new name.
+        </p>
+
+        <div id="createUpdateMessage" class="message"></div>
+    </section>
+
+    <section class="card">
+        <h2>Find / Delete / List Sloths</h2>
+
+        <div>
+            <label for="txtSlothFindID">Sloth ID:</label>
+            <input type="number" id="txtSlothFindID" />
+        </div>
+        <div style="margin-top:0.5rem;">
+            <button onclick="findSloth()">Find One (GET /id)</button>
+            <button onclick="deleteSloth()" class="danger">Delete (DELETE /id)</button>
+        </div>
+
+        <div style="margin-top:0.75rem;">
+            <button onclick="getAllSloths()">Load All (GET)</button>
+        </div>
+
+        <ul id="slothList"></ul>
+
+        <div id="listMessage" class="message"></div>
+    </section>
+
+    <section class="card">
+        <h2>Create / Update Tree</h2>
+        <div>
+            <label for="txtID">Tree ID:</label>
+            <input type="number" id="txtID" />
+        </div>
+        <div>
+            <label for="txtType">Type:</label>
+            <input type="text" id="txtType" />
+        </div>
+        <div>
+            <label for="txtAge">Age:</label>
+            <input type="number" id="txtAge" />
+        </div>
+        <div>
+            <label for="txtSlothID">SlothID:</label>
+            <input type="number" id="txtSlothID" />
+        </div>
+        <div style="margin-top:0.5rem;">
+            <button onclick="createTree()">Create (POST)</button>
+            <button onclick="updateTree()" class="secondary">Update (PUT)</button>
+        </div>
+
+        <p class="small">
+            Note: ID must be unique on create. On update, an existing ID will be replaced with the new name.
+        </p>
+
+        <div id="createUpdateMessage" class="message"></div>
+    </section>
+
+    
+    <section class="card">
+        <h2>Find / Delete / List Trees</h2>
+
+        <div>
+            <label for="txtTreeFindID">Tree ID:</label>
+            <input type="number" id="txtTreeFindID" />
+        </div>
+        <div style="margin-top:0.5rem;">
+            <button onclick="findTree()">Find One (GET /id)</button>
+            <button onclick="deleteTree()" class="danger">Delete (DELETE /id)</button>
+        </div>
+
+        <div style="margin-top:0.75rem;">
+            <button onclick="getAllTrees()">Load All (GET)</button>
+        </div>
+
+        <ul id="treeList"></ul>
+
+        <div id="listMessage" class="message"></div>
+    </section>
+
+    <section class="card">
+        <h2>Create / Update Jungle</h2>
+        <div>
+            <label for="txtJungleID">Jungle ID:</label>
+            <input type="number" id="txtJungleID" />
+        </div>
+        <div>
+            <label for="txtSize">Jungle Size:</label>
+            <input type="text" id="txtSize" />
+        </div>
+        <div>
+            <label for="txtJungleName">Jungle Name:</label>
+            <input type="number" id="txtJungleName" />
+        </div>
+        <div style="margin-top:0.5rem;">
+            <button onclick="createJungle()">Create (POST)</button>
+            <button onclick="updateJungle()" class="secondary">Update (PUT)</button>
+        </div>
+
+        <p class="small">
+            Note: ID must be unique on create. On update, an existing ID will be replaced with the new name.
+        </p>
+
+        <div id="createUpdateMessage" class="message"></div>
+    </section>
+
+    <section class="card">
+        <h2>Find / Delete / List Jungles</h2>
+
+        <div>
+            <label for="txtJungleFindID">Jungle ID:</label>
+            <input type="number" id="txtJungleFindID" />
+        </div>
+        <div style="margin-top:0.5rem;">
+            <button onclick="findJungle()">Find One (GET /id)</button>
+            <button onclick="deleteJungle()" class="danger">Delete (DELETE /id)</button>
+        </div>
+
+        <div style="margin-top:0.75rem;">
+            <button onclick="getAllJungles()">Load All (GET)</button>
+        </div>
+
+        <ul id="jungleList"></ul>
+
+        <div id="listMessage" class="message"></div>
+    </section>
+
+</main>
+
+<script>
+    baseUrl = '/tree'; 
+    function renderList(trees){
+        const list = document.getElementById('treeList');
+        list.innerHTML = '';
+        if(!trees || trees.length === 0){
+            list.innerHTML = '<li>No Trees found.</li>';
+            return;
+        }
+        for(const tree of trees){
+            const li = document.createElement('li');
+            li.textContent = `ID: ${tree.treeID} | Type: ${tree.treeType} | Age: ${tree.age} | SlothID ${tree.slothID}`;
+            list.appendChild(li);
+        }
+    }
+    function renderSingle(tree){
+        const list = document.getElementById('treeList');
+        list.innerHTML = '';
+        if(!tree){
+            list.innerHTML = '<li>No Tree found.</li>';
+            return;
+        }
+        const li = document.createElement('li');
+        li.textContent = `ID: ${tree.treeID} | Type: ${tree.treeType} | Age: ${tree.age} | SlothID ${tree.slothID}`;
+        list.appendChild(li);
+    }
+    function showMessage(elementId, text, isError = false){
+        const el = document.getElementById(elementId);
+        el.textContent = text || '';
+        el.className = 'message' + (isError ? ' error' : '');
+    }
+    async function getAllTrees(){
+        try{
+            const response = await fetch(baseUrl);
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            const trees = await response.json();
+            renderList(trees);
+            showMessage('listMessage', 'Loaded ' + trees.length + ' tree(s).');
+        }catch(err){
+            renderList([]);
+            showMessage('listMessage', 'Error loading trees: ' + err.message, true);
+        }
+    }
+    async function findTree(){
+        const idInput = document.getElementById('txtTreeFindID');
+        if(!idInput) return showMessage('listMessage', 'Find input not found in DOM.', true);
+        const id = String(idInput.value || '').trim();
+        if(!id) return showMessage('listMessage', 'Please enter an ID to find.', true);
+        try{
+            const url = `${baseUrl}/${encodeURIComponent(id)}`;
+            const response = await fetch(url);
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            const tree = await response.json();
+            renderSingle(tree);
+            showMessage('listMessage', 'Loaded tree ' + id + '.');
+        }catch(err){
+            renderSingle(null);
+            showMessage('listMessage', 'Error loading tree: ' + err.message, true);
+        }
+    }
+    async function createTree(){
+        const id = document.getElementById('txtID').value;
+        const type = document.getElementById('txtType').value;
+        const age = document.getElementById('txtAge').value;
+        const sloth = document.getElementById('txtSlothID').value;
+        if(!id || !type || !age) return showMessage('createUpdateMessage', 'ID and Name are required for create.', true);
+        const entry = {
+            treeID: parseInt(id, 10),
+            treeType: type,
+            age: parseInt(age,10),
+            slothID: parseInt(sloth,10)
+        };
+        try{
+            const response = await fetch(baseUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(entry)
+            });
+            const text = await response.text();
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            showMessage('createUpdateMessage', 'Create: ' + text);
+            await getAllTrees();
+        } catch (err) {
+            showMessage('createUpdateMessage', 'Error creating tree: ' + err.message, true);
+        }
+    }
+    async function deleteTree(){
+        const idInput = document.getElementById('txtTreeFindID');
+        if(!idInput) return showMessage('listMessage', 'Find input not found in DOM.', true);
+        const id = String(idInput.value || '').trim();
+        if(!id) return showMessage('listMessage', 'Please enter an ID to delete.', true);
+        try{
+            const url = `${baseUrl}/${encodeURIComponent(id)}`;
+            const response = await fetch(url, { method: 'DELETE' });
+            if(response.status === 404){
+                renderSingle(null);
+                showMessage('listMessage', `Tree with ID ${id} not found.`, true);
+                return;
+            }
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            const text = await response.text();
+            renderSingle(null);
+            showMessage('listMessage', `Deleted Tree ${id}: ${text}`);
+        }catch(err){
+            renderSingle(null);
+            showMessage('listMessage', 'Error deleting tree: ' + err.message, true);
+        }
+    }
+    // POST /tree
+    async function postTree(){
+        const id = document.getElementById('txtID').value;
+        const type = document.getElementById('txtType').value;
+        const age = document.getElementById('txtAge').value;
+        const sloth = document.getElementById('txtSlothID').value;
+        if(!id || !type || !age) return showMessage('createUpdateMessage', 'ID, Type, and Age are required.', true);
+        const entry = {
+            treeID: parseInt(id, 10),
+            treeType: type,
+            age: parseInt(age, 10),
+            slothID: parseInt(sloth, 10)
+        };
+        try{
+            const response = await fetch(baseUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(entry)
+            });
+            const text = await response.text();
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            const verifyResponse = await fetch(`${baseUrl}/${id}`);
+            const createdTree = await verifyResponse.json();
+            renderSingle(createdTree);
+            showMessage('createUpdateMessage', 'Created: ' + text);
+        }catch(err){
+            renderSingle(null);
+            showMessage('createUpdateMessage', 'Error creating tree: ' + err.message, true);
+        }
+    }
+</script>
+
+
+<script>
+    baseUrl = '/sloth'; 
+    function renderList(sloths){
+        const list = document.getElementById('slothList');
+        list.innerHTML = '';
+        if(!sloths || sloths.length === 0){
+            list.innerHTML = '<li>No Sloths found.</li>';
+            return;
+        }
+        for(const sloth of sloths){
+            const li = document.createElement('li');
+            li.textContent = `Level: ${sloth.slothLevel} | ID: ${sloth.slothID} | Name ${sloth.name} | Speed: ${sloth.SlothSpeed}`;
+            list.appendChild(li);
+        }
+    }
+    function renderSingle(sloth){
+        const list = document.getElementById('slothList');
+        list.innerHTML = '';
+        if(!sloth){
+            list.innerHTML = '<li>No Sloth found.</li>';
+            return;
+        }
+        const li = document.createElement('li');
+        li.textContent = `ID: ${sloth.slothID} | Level: ${sloth.slothLevel} | Speed: ${sloth.SlothSpeed} | Name ${sloth.name}`;
+        list.appendChild(li);
+    }
+    function showMessage(elementId, text, isError = false){
+        const el = document.getElementById(elementId);
+        el.textContent = text || '';
+        el.className = 'message' + (isError ? ' error' : '');
+    }
+    async function getAllSloths(){
+        try{
+            const response = await fetch(baseUrl);
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            const sloths = await response.json();
+            renderList(sloths);
+            showMessage('listMessage', 'Loaded ' + sloths.length + ' sloth(s).');
+        }catch(err){
+            renderList([]);
+            showMessage('listMessage', 'Error loading sloths: ' + err.message, true);
+        }
+    }
+    async function findSloth(){
+        const idInput = document.getElementById('txtSlothFindID');
+        if(!idInput) return showMessage('listMessage', 'Find input not found in DOM.', true);
+        const id = String(idInput.value || '').trim();
+        if(!id) return showMessage('listMessage', 'Please enter an ID to find.', true);
+        try{
+            const url = `${baseUrl}/${encodeURIComponent(id)}`;
+            const response = await fetch(url);
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            const sloth = await response.json();
+            renderSingle(sloth);
+            showMessage('listMessage', 'Loaded Sloth ' + id + '.');
+        }catch(err){
+            renderSingle(null);
+            showMessage('listMessage', 'Error loading Sloth: ' + err.message, true);
+        }
+    }
+    async function createSloth(){
+        const id = document.getElementById('txtSSlothID').value;
+        const slothName = document.getElementById('txtSlothName').value;
+        const speed = document.getElementById('txtSpeed').value;
+        const level = document.getElementById('txtLevel').value;
+        if(!id) return showMessage('createUpdateMessage', 'ID for create.', true);
+        const entry = {
+            slothID: parseInt(id),
+            slothLevel: parseInt(level),
+            speed: parseInt(speed),
+            name: slothName
+        };
+        try{
+            const response = await fetch(baseUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(entry)
+            });
+            const text = await response.text();
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            showMessage('createUpdateMessage', 'Create: ' + text);
+            await getAllTrees();
+        } catch (err) {
+            showMessage('createUpdateMessage', 'Error creating tree: ' + err.message, true);
+        }
+    }
+    async function deleteSloth(){
+        const idInput = document.getElementById('txtSlothFindID');
+        if(!idInput) return showMessage('listMessage', 'Find input not found in DOM.', true);
+        const id = String(idInput.value || '').trim();
+        if(!id) return showMessage('listMessage', 'Please enter an ID to delete.', true);
+        try{
+            const url = `${baseUrl}/${encodeURIComponent(id)}`;
+            const response = await fetch(url, { method: 'DELETE' });
+            if(response.status === 404){
+                renderSingle(null);
+                showMessage('listMessage', `Sloth with ID ${id} not found.`, true);
+                return;
+            }
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            const text = await response.text();
+            renderSingle(null);
+            showMessage('listMessage', `Deleted Sloth ${id}: ${text}`);
+        }catch(err){
+            renderSingle(null);
+            showMessage('listMessage', 'Error deleting sloth: ' + err.message, true);
+        }
+    }
+    // POST /tree
+    async function postSloth(){
+        const id = document.getElementById('txtSSlothID').value;
+        const name = document.getElementById('txtSlothName').value;
+        const speed = document.getElementById('txtSpeed').value;
+        const level = document.getElementById('txtLevel').value;
+        if(!id || !name || !speed || !level) return showMessage('createUpdateMessage', 'ID, Speed, Name, and level are required.', true);
+        const entry = {
+            slothID: parseInt(id, 10),
+            slothLevel: parseInt(level, 10),
+            speed: parseInt(speed, 10),
+            name: name
+        };
+        try{
+            const response = await fetch(baseUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(entry)
+            });
+            const text = await response.text();
+            if(!response.ok) throw new Error('Server returned status ' + response.status);
+            const verifyResponse = await fetch(`${baseUrl}/${id}`);
+            const createdSloth = await verifyResponse.json();
+            renderSingle(createdSloth);
+            showMessage('createUpdateMessage', 'Created: ' + text);
+        }catch(err){
+            renderSingle(null);
+            showMessage('createUpdateMessage', 'Error creating Sloth: ' + err.message, true);
+        }
+    }
+</script>
+</body>
+</html>

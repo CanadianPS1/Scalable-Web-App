@@ -1,13 +1,14 @@
 package com.example.Models;
 import java.io.Serializable;
 public class Tree implements Serializable{
-    int treeID, age;
+    int treeID, age, slothID;
     String treeType;
     public Tree(){}
-    public Tree(int age, int treeID, String treeType){
+    public Tree(int age, int treeID, String treeType, int slothID){
         this.age = age;
         this.treeID = treeID;
         this.treeType = treeType;
+        this.slothID = slothID;
     }
     public int getTreeID(){
         return treeID;
@@ -26,5 +27,11 @@ public class Tree implements Serializable{
     }
     public void setTreeType(String treeType){
         this.treeType = treeType;
+    }
+    public int getSlothID(){
+        return slothID;
+    }
+    public void setSlothID(int slothID){
+        this.slothID = slothID;
     }
 }

@@ -118,8 +118,8 @@
     <section class="card">
         <h2>Create / Update Sloth</h2>
         <div>
-            <label for="txtSSlothID">Sloth ID:</label>
-            <input type="number" id="txtSSlothID" />
+            <label for="txtSlothSlothID">Sloth ID:</label>
+            <input type="number" id="txtSlothSlothID" />
         </div>
         <div>
             <label for="txtLevel">Sloth Level:</label>
@@ -131,7 +131,7 @@
         </div>
         <div>
             <label for="txtSlothName">Name:</label>
-            <input type="number" id="txtSlothName" />
+            <input type="text" id="txtSlothName" />
         </div>
         <div style="margin-top:0.5rem;">
             <button onclick="createSloth()">Create (POST)</button>
@@ -166,8 +166,8 @@
         <div id="listMessage" class="message"></div>
     </section>
     <script>
-        baseUrl = '/sloth'; 
-        function renderList(sloths){
+        slothUrl = '/sloth'; 
+        function renderSlothList(sloths){
             const list = document.getElementById('slothList');
             list.innerHTML = '';
             if(!sloths || sloths.length === 0){
@@ -176,11 +176,11 @@
             }
             for(const sloth of sloths){
                 const li = document.createElement('li');
-                li.textContent = `Level: ${sloth.slothLevel} | ID: ${sloth.slothID} | Name ${sloth.name} | Speed: ${sloth.SlothSpeed}`;
+                li.textContent = `ID: ${sloth.slothID} | Level: ${sloth.slothLevel} | Name ${sloth.name} | Speed: ${sloth.SlothSpeed}`;
                 list.appendChild(li);
             }
         }
-        function renderSingle(sloth){
+        function renderSingleSloth(sloth){
             const list = document.getElementById('slothList');
             list.innerHTML = '';
             if(!sloth){
@@ -188,7 +188,7 @@
                 return;
             }
             const li = document.createElement('li');
-            li.textContent = `ID: ${sloth.slothID} | Level: ${sloth.slothLevel} | Speed: ${sloth.SlothSpeed} | Name ${sloth.name}`;
+            li.textContent = `ID: ${sloth.slothID} | Level: ${sloth.slothLevel} | Speed: ${sloth.speed} | Name ${sloth.name}`;
             list.appendChild(li);
         }
         function showMessage(elementId, text, isError = false){
@@ -198,13 +198,13 @@
         }
         async function getAllSloths(){
             try{
-                const response = await fetch(baseUrl);
+                const response = await fetch(slothUrl);
                 if(!response.ok) throw new Error('Server returned status ' + response.status);
                 const sloths = await response.json();
-                renderList(sloths);
+                renderSlothList(sloths);
                 showMessage('listMessage', 'Loaded ' + sloths.length + ' sloth(s).');
             }catch(err){
-                renderList([]);
+                renderSlothList([]);
                 showMessage('listMessage', 'Error loading sloths: ' + err.message, true);
             }
         }
@@ -214,19 +214,19 @@
             const id = String(idInput.value || '').trim();
             if(!id) return showMessage('listMessage', 'Please enter an ID to find.', true);
             try{
-                const url = `${baseUrl}/${encodeURIComponent(id)}`;
+                const url = `${slothUrl}/${encodeURIComponent(id)}`;
                 const response = await fetch(url);
                 if(!response.ok) throw new Error('Server returned status ' + response.status);
                 const sloth = await response.json();
-                renderSingle(sloth);
+                renderSingleSloth(sloth);
                 showMessage('listMessage', 'Loaded Sloth ' + id + '.');
             }catch(err){
-                renderSingle(null);
+                renderSingleSloth(null);
                 showMessage('listMessage', 'Error loading Sloth: ' + err.message, true);
             }
         }
         async function createSloth(){
-            const id = document.getElementById('txtSSlothID').value;
+            const id = document.getElementById('txtSlothSlothID').value;
             const slothName = document.getElementById('txtSlothName').value;
             const speed = document.getElementById('txtSpeed').value;
             const level = document.getElementById('txtLevel').value;
@@ -234,11 +234,11 @@
             const entry = {
                 slothID: parseInt(id),
                 slothLevel: parseInt(level),
-                slothSpeed: parseInt(speed),
+                speed: parseInt(speed),
                 name: slothName
             };
             try{
-                const response = await fetch(baseUrl, {
+                const response = await fetch(slothUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(entry)
@@ -257,25 +257,25 @@
             const id = String(idInput.value || '').trim();
             if(!id) return showMessage('listMessage', 'Please enter an ID to delete.', true);
             try{
-                const url = `${baseUrl}/${encodeURIComponent(id)}`;
+                const url = `${slothUrl}/${encodeURIComponent(id)}`;
                 const response = await fetch(url, { method: 'DELETE' });
                 if(response.status === 404){
-                    renderSingle(null);
+                    renderSingleSloth(null);
                     showMessage('listMessage', `Sloth with ID ${id} not found.`, true);
                     return;
                 }
                 if(!response.ok) throw new Error('Server returned status ' + response.status);
                 const text = await response.text();
-                renderSingle(null);
+                renderSingleSloth(null);
                 showMessage('listMessage', `Deleted Sloth ${id}: ${text}`);
             }catch(err){
-                renderSingle(null);
+                renderSingleSloth(null);
                 showMessage('listMessage', 'Error deleting sloth: ' + err.message, true);
             }
         }
         // POST /tree
-        async function postSloth(){
-            const id = document.getElementById('txtSSlothID').value;
+        async function updateSloth(){
+            const id = document.getElementById('txtSlothSlothID').value;
             const name = document.getElementById('txtSlothName').value;
             const speed = document.getElementById('txtSpeed').value;
             const level = document.getElementById('txtLevel').value;
@@ -287,14 +287,14 @@
                 name: name
             };
             try{
-                const response = await fetch(baseUrl, {
+                const response = await fetch(slothUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(entry)
                 });
                 const text = await response.text();
                 if(!response.ok) throw new Error('Server returned status ' + response.status);
-                const verifyResponse = await fetch(`${baseUrl}/${id}`);
+                const verifyResponse = await fetch(`${slothUrl}/${id}`);
                 const createdSloth = await verifyResponse.json();
                 renderSingle(createdSloth);
                 showMessage('createUpdateMessage', 'Created: ' + text);
@@ -308,20 +308,20 @@
     <section class="card">
         <h2>Create / Update Tree</h2>
         <div>
-            <label for="txtID">Tree ID:</label>
-            <input type="number" id="txtID" />
+            <label for="txtTreeID">Tree ID:</label>
+            <input type="number" id="txtTreeID" />
         </div>
         <div>
-            <label for="txtType">Type:</label>
-            <input type="text" id="txtType" />
+            <label for="txtTreeType">Type:</label>
+            <input type="text" id="txtTreeType" />
         </div>
         <div>
-            <label for="txtAge">Age:</label>
-            <input type="number" id="txtAge" />
+            <label for="txtTreeAge">Age:</label>
+            <input type="number" id="txtTreeAge" />
         </div>
         <div>
-            <label for="txtSlothID">SlothID:</label>
-            <input type="number" id="txtSlothID" />
+            <label for="txtTreeSlothID">SlothID:</label>
+            <input type="number" id="txtTreeSlothID" />
         </div>
         <div style="margin-top:0.5rem;">
             <button onclick="createTree()">Create (POST)</button>
@@ -357,8 +357,8 @@
         <div id="listMessage" class="message"></div>
     </section>
     <script>
-        baseUrl = '/tree'; 
-        function renderList(trees){
+        treeUrl = '/tree'; 
+        function renderTreeList(trees){
             const list = document.getElementById('treeList');
             list.innerHTML = '';
             if(!trees || trees.length === 0){
@@ -371,7 +371,7 @@
                 list.appendChild(li);
             }
         }
-        function renderSingle(tree){
+        function renderSingleTree(tree){
             const list = document.getElementById('treeList');
             list.innerHTML = '';
             if(!tree){
@@ -389,13 +389,13 @@
         }
         async function getAllTrees(){
             try{
-                const response = await fetch(baseUrl);
+                const response = await fetch(treeUrl);
                 if(!response.ok) throw new Error('Server returned status ' + response.status);
                 const trees = await response.json();
-                renderList(trees);
+                renderTreeList(trees);
                 showMessage('listMessage', 'Loaded ' + trees.length + ' tree(s).');
             }catch(err){
-                renderList([]);
+                renderTreeList([]);
                 showMessage('listMessage', 'Error loading trees: ' + err.message, true);
             }
         }
@@ -405,22 +405,22 @@
             const id = String(idInput.value || '').trim();
             if(!id) return showMessage('listMessage', 'Please enter an ID to find.', true);
             try{
-                const url = `${baseUrl}/${encodeURIComponent(id)}`;
+                const url = `${treeUrl}/${encodeURIComponent(id)}`;
                 const response = await fetch(url);
                 if(!response.ok) throw new Error('Server returned status ' + response.status);
                 const tree = await response.json();
-                renderSingle(tree);
+                renderSingleTree(tree);
                 showMessage('listMessage', 'Loaded tree ' + id + '.');
             }catch(err){
-                renderSingle(null);
+                renderSingleTree(null);
                 showMessage('listMessage', 'Error loading tree: ' + err.message, true);
             }
         }
         async function createTree(){
-            const id = document.getElementById('txtID').value;
-            const type = document.getElementById('txtType').value;
-            const age = document.getElementById('txtAge').value;
-            const sloth = document.getElementById('txtSlothID').value;
+            const id = document.getElementById('txtTreeID').value;
+            const type = document.getElementById('txtTreeType').value;
+            const age = document.getElementById('txtTreeAge').value;
+            const sloth = document.getElementById('txtTreeSlothID').value;
             if(!id || !type || !age) return showMessage('createUpdateMessage', 'ID and Name are required for create.', true);
             const entry = {
                 treeID: parseInt(id, 10),
@@ -429,7 +429,7 @@
                 slothID: parseInt(sloth,10)
             };
             try{
-                const response = await fetch(baseUrl, {
+                const response = await fetch(treeUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(entry)
@@ -448,28 +448,28 @@
             const id = String(idInput.value || '').trim();
             if(!id) return showMessage('listMessage', 'Please enter an ID to delete.', true);
             try{
-                const url = `${baseUrl}/${encodeURIComponent(id)}`;
+                const url = `${treeUrl}/${encodeURIComponent(id)}`;
                 const response = await fetch(url, { method: 'DELETE' });
                 if(response.status === 404){
-                    renderSingle(null);
+                    renderSingleTree(null);
                     showMessage('listMessage', `Tree with ID ${id} not found.`, true);
                     return;
                 }
                 if(!response.ok) throw new Error('Server returned status ' + response.status);
                 const text = await response.text();
-                renderSingle(null);
+                renderSingleTree(null);
                 showMessage('listMessage', `Deleted Tree ${id}: ${text}`);
             }catch(err){
-                renderSingle(null);
+                renderSingleTree(null);
                 showMessage('listMessage', 'Error deleting tree: ' + err.message, true);
             }
         }
         // POST /tree
         async function postTree(){
-            const id = document.getElementById('txtID').value;
-            const type = document.getElementById('txtType').value;
-            const age = document.getElementById('txtAge').value;
-            const sloth = document.getElementById('txtSlothID').value;
+            const id = document.getElementById('txtTreeID').value;
+            const type = document.getElementById('txtTreeType').value;
+            const age = document.getElementById('txtTreeAge').value;
+            const sloth = document.getElementById('txtTreeSlothID').value;
             if(!id || !type || !age) return showMessage('createUpdateMessage', 'ID, Type, and Age are required.', true);
             const entry = {
                 treeID: parseInt(id, 10),
@@ -478,19 +478,19 @@
                 slothID: parseInt(sloth, 10)
             };
             try{
-                const response = await fetch(baseUrl, {
+                const response = await fetch(treeUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(entry)
                 });
                 const text = await response.text();
                 if(!response.ok) throw new Error('Server returned status ' + response.status);
-                const verifyResponse = await fetch(`${baseUrl}/${id}`);
+                const verifyResponse = await fetch(`${treeUrl}/${id}`);
                 const createdTree = await verifyResponse.json();
-                renderSingle(createdTree);
+                renderSingleTree(createdTree);
                 showMessage('createUpdateMessage', 'Created: ' + text);
             }catch(err){
-                renderSingle(null);
+                renderSingleTree(null);
                 showMessage('createUpdateMessage', 'Error creating tree: ' + err.message, true);
             }
         }
@@ -503,19 +503,19 @@
             <input type="number" id="txtJungleID" />
         </div>
         <div>
-            <label for="txtSize">Jungle Size:</label>
-            <input type="text" id="txtJungleSize" />
+            <label for="txtJungleSize">Jungle Size:</label>
+            <input type="number" id="txtJungleSize" />
         </div>
         <div>
             <label for="txtJungleName">Jungle Name:</label>
-            <input type="number" id="txtJungleName" />
+            <input type="text" id="txtJungleName" />
         </div>
         <div>
-            <label for="txtSSSlothID">Sloth ID:</label>
+            <label for="txtJunglelothID">Sloth ID:</label>
             <input type="number" id="txtJunglesSlothID" />
         </div>
         <div>
-            <label for="txtTTTreeID">Tree ID:</label>
+            <label for="txtJungleTreeID">Tree ID:</label>
             <input type="number" id="txtJunglesTreeID" />
         </div>
         <div style="margin-top:0.5rem;">
@@ -554,8 +554,8 @@
 </main>
 
 <script>
-    baseUrl = '/jungle'; 
-    function renderList(jungles){
+    jungleUrl = '/jungle'; 
+    function renderJungleList(jungles){
         const list = document.getElementById('jungleList');
         list.innerHTML = '';
         if(!jungles || jungles.length === 0){
@@ -564,11 +564,11 @@
         }
         for(const jungle of jungles){
             const li = document.createElement('li');
-            li.textContent = `ID: ${jungle.jungleID} | Size: ${jungle.size} | Name: ${jungle.name} | SlothID ${jungle.slothID} | TreeID ${jungle.treeID}`;
+            li.textContent = `ID: ${jungle.jungleID} | Size: ${jungle.jungleSize} | Name: ${jungle.jungleName} | SlothID ${jungle.slothID} | TreeID ${jungle.treeID}`;
             list.appendChild(li);
         }
     }
-    function renderSingle(jungle){
+    function renderSingleJungle(jungle){
         const list = document.getElementById('jungleList');
         list.innerHTML = '';
         if(!jungle){
@@ -576,7 +576,7 @@
             return;
         }
         const li = document.createElement('li');
-        li.textContent = `ID: ${jungle.jungleID} | Size: ${jungle.size} | Name: ${jungle.name} | SlothID ${jungle.slothID} | TreeID ${jungle.treeID}`;
+        li.textContent = `ID: ${jungle.jungleID} | Size: ${jungle.jungleSize} | Name: ${jungle.jungleName} | SlothID ${jungle.slothID} | TreeID ${jungle.treeID}`;
         list.appendChild(li);
     }
     function showMessage(elementId, text, isError = false){
@@ -586,13 +586,13 @@
     }
     async function getAllJungles(){
         try{
-            const response = await fetch(baseUrl);
+            const response = await fetch(jungleUrl);
             if(!response.ok) throw new Error('Server returned status ' + response.status);
             const jungles = await response.json();
-            renderList(jungles);
+            renderJungleList(jungles);
             showMessage('listMessage', 'Loaded ' + jungles.length + ' jungle(s).');
         }catch(err){
-            renderList([]);
+            renderJungleList([]);
             showMessage('listMessage', 'Error loading jungles: ' + err.message, true);
         }
     }
@@ -602,14 +602,14 @@
         const id = String(idInput.value || '').trim();
         if(!id) return showMessage('listMessage', 'Please enter an ID to find.', true);
         try{
-            const url = `${baseUrl}/${encodeURIComponent(id)}`;
+            const url = `${jungleUrl}/${encodeURIComponent(id)}`;
             const response = await fetch(url);
             if(!response.ok) throw new Error('Server returned status ' + response.status);
             const jungle = await response.json();
-            renderSingle(jungle);
+            renderSingleJungle(jungle);
             showMessage('listMessage', 'Loaded jungle ' + id + '.');
         }catch(err){
-            renderSingle(null);
+            renderSingleJungle(null);
             showMessage('listMessage', 'Error loading jungle: ' + err.message, true);
         }
     }
@@ -621,14 +621,14 @@
         const treeID = document.getElementById('txtJunglesTreeID').value;
         if(!id) return showMessage('createUpdateMessage', 'ID and Name are required for create.', true);
         const entry = {
-            jungleID: parseInt(id),
-            jungleSize: parseInt(size),
+            jungleID: parseInt(id,10),
+            jungleSize: parseInt(size,10),
             jungleName: name + "",
-            treeID: parseInt(treeID),
-            slothID: parseInt(slothID)
+            treeID: parseInt(treeID,10),
+            slothID: parseInt(slothID,10)
         };
         try{
-            const response = await fetch(baseUrl, {
+            const response = await fetch(jungleUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(entry)
@@ -647,19 +647,19 @@
         const id = String(idInput.value || '').trim();
         if(!id) return showMessage('listMessage', 'Please enter an ID to delete.', true);
         try{
-            const url = `${baseUrl}/${encodeURIComponent(id)}`;
+            const url = `${jungleUrl}/${encodeURIComponent(id)}`;
             const response = await fetch(url, { method: 'DELETE' });
             if(response.status === 404){
-                renderSingle(null);
+                renderSingleJungle(null);
                 showMessage('listMessage', `Jungle with ID ${id} not found.`, true);
                 return;
             }
             if(!response.ok) throw new Error('Server returned status ' + response.status);
             const text = await response.text();
-            renderSingle(null);
+            renderSingleJungle(null);
             showMessage('listMessage', `Deleted Jungle ${id}: ${text}`);
         }catch(err){
-            renderSingle(null);
+            renderSingleJungle(null);
             showMessage('listMessage', 'Error deleting Jungle: ' + err.message, true);
         }
     }
@@ -679,19 +679,19 @@
             slothID: parseInt(slothID)
         };
         try{
-            const response = await fetch(baseUrl, {
+            const response = await fetch(jungleUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(entry)
             });
             const text = await response.text();
             if(!response.ok) throw new Error('Server returned status ' + response.status);
-            const verifyResponse = await fetch(`${baseUrl}/${id}`);
+            const verifyResponse = await fetch(`${jungleUrl}/${id}`);
             const createdJungle = await verifyResponse.json();
-            renderSingle(createdJungle);
+            renderSingleJungle(createdJungle);
             showMessage('createUpdateMessage', 'Created: ' + text);
         }catch(err){
-            renderSingle(null);
+            renderSingleJungle(null);
             showMessage('createUpdateMessage', 'Error creating jungle: ' + err.message, true);
         }
     }

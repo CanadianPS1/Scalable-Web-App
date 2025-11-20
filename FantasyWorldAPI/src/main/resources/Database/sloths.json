@@ -1,0 +1,23 @@
+[ 
+    {
+        "slothID" : 1,
+        "name" : "chris",
+        "slothLevel" : 6,
+        "slothSpeed" : 7
+    }, {
+        "slothID" : 2,
+        "name" : "Bennen",
+        "slothLevel" : 2,
+        "slothSpeed" : 2
+    }, {
+        "slothID" : 3,
+        "name" : "Gorbachev",
+        "slothLevel" : 10,
+        "slothSpeed" : 11
+    }, {
+        "slothID" : 1,
+        "name" : "Gatric",
+        "slothLevel" : 1,
+        "slothSpeed" : 1
+    } 
+]

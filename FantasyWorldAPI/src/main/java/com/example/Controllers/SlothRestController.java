@@ -12,7 +12,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class SlothRestController{
     @RequestMapping(path = "", method = RequestMethod.POST)
     public String create(@RequestBody Sloth sloth){
-        return SlothRestDataArrayList.add(sloth);
+        switch(Settings.dbStatus){
+            case ARRAYLIST -> {
+                return SlothRestDataArrayList.add(sloth);
+            }
+            case JSON -> {
+                try {
+                    return SlothRestDataJSON.add(sloth);
+                } catch (Exception e) {
+                }
+            }
+            case JPA -> {
+                return null;
+            }
+            case SQL -> {
+                return null;
+            }
+            default -> {
+                return null;
+            }
+        }
+        return null;
     }
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Sloth> getAll(){

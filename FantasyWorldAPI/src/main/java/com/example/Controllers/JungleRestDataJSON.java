@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 public class JungleRestDataJSON{
-    private static final File jsonFile = new File("Scalable-Web-App\\FantasyWorldAPI\\src\\main\\resources\\Database\\jungles.json");    
+    private static final File JSON_FILE = new File("Scalable-Web-App\\FantasyWorldAPI\\src\\main\\resources\\Database\\jungles.json");    
     private static final ObjectMapper objectMapper = new ObjectMapper();
     public static synchronized Jungle update(Jungle jungle) throws IOException {
         List<Jungle> jungles = getAllInternal();
@@ -20,7 +20,7 @@ public class JungleRestDataJSON{
                 jungles.add(jungle);
                 saveFile(jungles);
                 return jungle;
-            };
+            }
         }
         return null;
     }
@@ -53,10 +53,10 @@ public class JungleRestDataJSON{
         return "Jungle Added! " + jungle.getJungleID();
     }
     private static List<Jungle> getAllInternal() throws IOException {
-        if(!jsonFile.exists() || jsonFile.length() == 0) return new ArrayList<>();
+        if(!JSON_FILE.exists() || JSON_FILE.length() == 0) return new ArrayList<>();
         try{
             return objectMapper.readValue(
-                jsonFile,
+                JSON_FILE,
                 new TypeReference<List<Jungle>>() {}
             );
         }catch(IOException ex){
@@ -72,13 +72,13 @@ public class JungleRestDataJSON{
                      .orElse(0) + 1;
     }
     private static void saveFile(List<Jungle> jungles) throws IOException{
-        File parent = jsonFile.getParentFile();
+        File parent = JSON_FILE.getParentFile();
         if(parent != null && !parent.exists()) parent.mkdirs();
         ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
-        writer.writeValue(jsonFile, jungles);
+        writer.writeValue(JSON_FILE, jungles);
     }
 
     public static File getJsonFile() {
-        return jsonFile;
+        return JSON_FILE;
     }
 }

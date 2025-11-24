@@ -41,21 +41,17 @@ public class SlothRestController{
     public List<Sloth> getAll(){
         switch(Settings.dbStatus){
             case ARRAYLIST -> {
-                System.out.println("using arraylist");
                 return SlothRestDataArrayList.getAll();
             }
             case JSON -> {
                 try{
-                    System.out.println("using json");
                     return SlothRestDataJSON.getAll();
                 }catch(IOException e){}
             }
             case JPA -> {
-                System.out.println("using jpa");
                 return null;
             }
             case SQL -> {
-                System.out.println("using sql");
                 return null;
             }
             default -> {

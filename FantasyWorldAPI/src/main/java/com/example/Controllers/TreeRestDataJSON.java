@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 public class TreeRestDataJSON{
-    private static final File jsonFile = new File("Scalable-Web-App\\FantasyWorldAPI\\src\\main\\resources\\Database\\trees.json");    
+    private static final File JSON_FILE = new File("Scalable-Web-App\\FantasyWorldAPI\\src\\main\\resources\\Database\\trees.json");    
     private static final ObjectMapper objectMapper = new ObjectMapper();
     public static synchronized Tree update(Tree tree) throws IOException {
         List<Tree> trees = getAllInternal();
@@ -20,7 +20,7 @@ public class TreeRestDataJSON{
                 trees.add(tree);
                 saveFile(trees);
                 return tree;
-            };
+            }
         }
         return null;
     }
@@ -53,10 +53,10 @@ public class TreeRestDataJSON{
         return "Tree Added! " + tree.getTreeID();
     }
     private static List<Tree> getAllInternal() throws IOException {
-        if(!jsonFile.exists() || jsonFile.length() == 0) return new ArrayList<>();
+        if(!JSON_FILE.exists() || JSON_FILE.length() == 0) return new ArrayList<>();
         try{
             return objectMapper.readValue(
-                jsonFile,
+                JSON_FILE,
                 new TypeReference<List<Tree>>() {}
             );
         }catch(IOException ex){
@@ -72,13 +72,13 @@ public class TreeRestDataJSON{
                      .orElse(0) + 1;
     }
     private static void saveFile(List<Tree> trees) throws IOException{
-        File parent = jsonFile.getParentFile();
+        File parent = JSON_FILE.getParentFile();
         if(parent != null && !parent.exists()) parent.mkdirs();
         ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
-        writer.writeValue(jsonFile, trees);
+        writer.writeValue(JSON_FILE, trees);
     }
 
     public static File getJsonFile() {
-        return jsonFile;
+        return JSON_FILE;
     }
 }

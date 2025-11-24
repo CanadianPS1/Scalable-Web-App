@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 public class SlothRestDataJSON{
-    private static final File jsonFile = new File("Scalable-Web-App\\FantasyWorldAPI\\src\\main\\resources\\Database\\sloths.json");    
+    private static final File JSON_FILE = new File("Scalable-Web-App\\FantasyWorldAPI\\src\\main\\resources\\Database\\sloths.json");    
     private static final ObjectMapper objectMapper = new ObjectMapper();
     public static synchronized Sloth update(Sloth sloth) throws IOException {
         List<Sloth> sloths = getAllInternal();
@@ -20,7 +20,7 @@ public class SlothRestDataJSON{
                 sloths.add(sloth);
                 saveFile(sloths);
                 return sloth;
-            };
+            }
         }
         return null;
     }
@@ -53,10 +53,10 @@ public class SlothRestDataJSON{
         return "Sloth Added! " + sloth.getSlothID();
     }
     private static List<Sloth> getAllInternal() throws IOException {
-        if(!jsonFile.exists() || jsonFile.length() == 0) return new ArrayList<>();
+        if(!JSON_FILE.exists() || JSON_FILE.length() == 0) return new ArrayList<>();
         try{
             return objectMapper.readValue(
-                jsonFile,
+                JSON_FILE,
                 new TypeReference<List<Sloth>>() {}
             );
         }catch(IOException ex){
@@ -72,13 +72,13 @@ public class SlothRestDataJSON{
                      .orElse(0) + 1;
     }
     private static void saveFile(List<Sloth> sloths) throws IOException{
-        File parent = jsonFile.getParentFile();
+        File parent = JSON_FILE.getParentFile();
         if(parent != null && !parent.exists()) parent.mkdirs();
         ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
-        writer.writeValue(jsonFile, sloths);
+        writer.writeValue(JSON_FILE, sloths);
     }
 
     public static File getJsonFile() {
-        return jsonFile;
+        return JSON_FILE;
     }
 }

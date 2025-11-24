@@ -41,21 +41,17 @@ public class JungleRestController{
     public List<Jungle> getAll(){
         switch(Settings.dbStatus){
             case ARRAYLIST -> {
-                System.out.println("using arraylist");
                 return JungleRestDataArrayList.getAll();
             }
             case JSON -> {
                 try{
-                    System.out.println("using json");
                     return JungleRestDataJSON.getAll();
                 }catch(IOException e){}
             }
             case JPA -> {
-                System.out.println("using jpa");
                 return null;
             }
             case SQL -> {
-                System.out.println("using sql");
                 return null;
             }
             default -> {

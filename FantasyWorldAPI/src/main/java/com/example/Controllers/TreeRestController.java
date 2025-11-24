@@ -1,4 +1,5 @@
 package com.example.Controllers;
+import java.io.IOException;
 import com.example.Models.*;
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ public class TreeRestController{
             case JSON -> {
                 try {
                     return TreeRestDataJSON.add(tree);
-                } catch (Exception e) {
+                } catch (IOException e) {
                 }
             }
             case JPA -> {
@@ -42,7 +43,7 @@ public class TreeRestController{
             case JSON -> {
                 try{
                     return TreeRestDataJSON.getAll();
-                }catch(Exception e){}
+                }catch(IOException e){}
             }
             case JPA -> {
                 return null;
@@ -65,7 +66,7 @@ public class TreeRestController{
             case JSON -> {
                 try{
                     return TreeRestDataJSON.findById(id);
-                }catch(Exception e){}
+                }catch(IOException e){}
             }
             case JPA -> {
                 return null;
@@ -88,7 +89,7 @@ public class TreeRestController{
             case JSON -> {
                 try{
                     return TreeRestDataJSON.update(tree);
-                }catch(Exception e){}
+                }catch(IOException e){}
             }
             case JPA -> {
                 return null;
@@ -111,7 +112,7 @@ public class TreeRestController{
             case JSON -> {
                 try{
                     return TreeRestDataJSON.delete(id);
-                }catch(Exception e){}
+                }catch(IOException e){}
             }
             case JPA -> {
                 return null;

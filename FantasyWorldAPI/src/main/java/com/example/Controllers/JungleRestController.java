@@ -1,7 +1,10 @@
 package com.example.Controllers;
+import java.io.IOException;
+
 import com.example.Models.*;
+
 import java.util.List;
-// import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,22 +15,123 @@ import org.springframework.web.bind.annotation.RestController;
 public class JungleRestController{
     @RequestMapping(path = "", method = RequestMethod.POST)
     public String create(@RequestBody Jungle jungle){
-        return JungleRestDataArrayList.add(jungle);
+        switch(Settings.dbStatus){
+            case ARRAYLIST -> {
+                return JungleRestDataArrayList.add(jungle);
+            }
+            case JSON -> {
+                try {
+                    return JungleRestDataJSON.add(jungle);
+                } catch (IOException e) {
+                }
+            }
+            case JPA -> {
+                return null;
+            }
+            case SQL -> {
+                return null;
+            }
+            default -> {
+                return null;
+            }
+        }
+        return null;
     }
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Jungle> getAll(){
-        return JungleRestDataArrayList.getAll();
+        switch(Settings.dbStatus){
+            case ARRAYLIST -> {
+                System.out.println("using arraylist");
+                return JungleRestDataArrayList.getAll();
+            }
+            case JSON -> {
+                try{
+                    System.out.println("using json");
+                    return JungleRestDataJSON.getAll();
+                }catch(IOException e){}
+            }
+            case JPA -> {
+                System.out.println("using jpa");
+                return null;
+            }
+            case SQL -> {
+                System.out.println("using sql");
+                return null;
+            }
+            default -> {
+                System.out.println("no yupe found");
+                return null;
+            }
+        }
+        return null;
     }
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Jungle findById(@PathVariable int id){
-        return JungleRestDataArrayList.getById(id);
+        switch(Settings.dbStatus){
+            case ARRAYLIST -> {
+                return JungleRestDataArrayList.getById(id);
+            }
+            case JSON -> {
+                try{
+                    return JungleRestDataJSON.findById(id);
+                }catch(IOException e){}
+            }
+            case JPA -> {
+                return null;
+            }
+            case SQL -> {
+                return null;
+            }
+            default -> {
+                return null;
+            }
+        }
+        return null;
     }
     @RequestMapping(path = "", method = RequestMethod.PUT)
     public Jungle updateById(@RequestBody Jungle jungle){
-        return JungleRestDataArrayList.update(jungle);
+        switch(Settings.dbStatus){
+            case ARRAYLIST -> {
+                return JungleRestDataArrayList.update(jungle);
+            }
+            case JSON -> {
+                try{
+                    return JungleRestDataJSON.update(jungle);
+                }catch(IOException e){}
+            }
+            case JPA -> {
+                return null;
+            }
+            case SQL -> {
+                return null;
+            }
+            default -> {
+                return null;
+            }
+        }
+        return null;
     }
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public String delete(@PathVariable int id){
-        return JungleRestDataArrayList.delete(id);
+        switch(Settings.dbStatus){
+            case ARRAYLIST -> {
+                return JungleRestDataArrayList.delete(id);
+            }
+            case JSON -> {
+                try{
+                    return JungleRestDataJSON.delete(id);
+                }catch(IOException e){}
+            }
+            case JPA -> {
+                return null;
+            }
+            case SQL -> {
+                return null;
+            }
+            default -> {
+                return null;
+            }
+        }
+        return null;
     }
 }

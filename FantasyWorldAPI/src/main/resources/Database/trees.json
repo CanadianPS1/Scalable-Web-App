@@ -1,3 +1,21 @@
-[
-    
-]
+[ {
+  "treeID" : 1,
+  "age" : 62,
+  "slothID" : 1,
+  "treeType" : "oak"
+}, {
+  "treeID" : 2,
+  "age" : 15,
+  "slothID" : 2,
+  "treeType" : "mangrove"
+}, {
+  "treeID" : 3,
+  "age" : 362,
+  "slothID" : 3,
+  "treeType" : "red wood"
+}, {
+  "treeID" : 4,
+  "age" : 6,
+  "slothID" : 4,
+  "treeType" : "blue spruce"
+} ]

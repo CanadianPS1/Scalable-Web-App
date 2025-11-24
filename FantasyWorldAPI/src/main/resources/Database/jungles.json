@@ -1,0 +1,25 @@
+[ {
+  "jungleID" : 1,
+  "jungleSize" : 2700000,
+  "slothID" : 1,
+  "treeID" : 1,
+  "jungleName" : "Amazon"
+}, {
+  "jungleID" : 2,
+  "jungleSize" : 620000,
+  "slothID" : 2,
+  "treeID" : 2,
+  "jungleName" : "Congo"
+}, {
+  "jungleID" : 3,
+  "jungleSize" : 303500,
+  "slothID" : 3,
+  "treeID" : 3,
+  "jungleName" : "New Guinea"
+}, {
+  "jungleID" : 4,
+  "jungleSize" : 287000,
+  "slothID" : 4,
+  "treeID" : 4,
+  "jungleName" : "Borneo Lowland"
+} ]

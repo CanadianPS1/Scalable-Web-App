@@ -13,4 +13,9 @@
   "slothID" : 3,
   "name" : "Gorbachev",
   "slothSpeed" : 11
-} ]
+}, {
+  "slothLevel" : 6,
+  "slothID" : 4,
+  "name" : "Guptle Kan",
+  "slothSpeed" : 58
+}]

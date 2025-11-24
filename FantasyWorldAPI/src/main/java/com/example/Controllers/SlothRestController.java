@@ -1,6 +1,10 @@
 package com.example.Controllers;
+import java.io.IOException;
+
 import com.example.Models.*;
+
 import java.util.List;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +22,7 @@ public class SlothRestController{
             case JSON -> {
                 try {
                     return SlothRestDataJSON.add(sloth);
-                } catch (Exception e) {
+                } catch (IOException e) {
                 }
             }
             case JPA -> {
@@ -44,7 +48,7 @@ public class SlothRestController{
                 try{
                     System.out.println("using json");
                     return SlothRestDataJSON.getAll();
-                }catch(Exception e){}
+                }catch(IOException e){}
             }
             case JPA -> {
                 System.out.println("using jpa");
@@ -70,7 +74,7 @@ public class SlothRestController{
             case JSON -> {
                 try{
                     return SlothRestDataJSON.findById(id);
-                }catch(Exception e){}
+                }catch(IOException e){}
             }
             case JPA -> {
                 return null;
@@ -93,7 +97,7 @@ public class SlothRestController{
             case JSON -> {
                 try{
                     return SlothRestDataJSON.update(sloth);
-                }catch(Exception e){}
+                }catch(IOException e){}
             }
             case JPA -> {
                 return null;
@@ -116,7 +120,7 @@ public class SlothRestController{
             case JSON -> {
                 try{
                     return SlothRestDataJSON.delete(id);
-                }catch(Exception e){}
+                }catch(IOException e){}
             }
             case JPA -> {
                 return null;

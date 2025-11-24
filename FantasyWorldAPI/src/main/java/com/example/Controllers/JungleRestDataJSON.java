@@ -77,7 +77,6 @@ public class JungleRestDataJSON{
         ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
         writer.writeValue(JSON_FILE, jungles);
     }
-
     public static File getJsonFile() {
         return JSON_FILE;
     }

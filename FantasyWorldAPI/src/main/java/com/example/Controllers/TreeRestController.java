@@ -26,7 +26,7 @@ public class TreeRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return TreeRestDataSQL.add(tree);
             }
             default -> {
                 return null;
@@ -49,7 +49,7 @@ public class TreeRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return TreeRestDataSQL.getAll();
             }
             default -> {
                 return null;
@@ -72,7 +72,7 @@ public class TreeRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return TreeRestDataSQL.findByID(id);
             }
             default -> {
                 return null;
@@ -95,7 +95,7 @@ public class TreeRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return TreeRestDataSQL.update(tree);
             }
             default -> {
                 return null;
@@ -118,7 +118,7 @@ public class TreeRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return TreeRestDataSQL.delete(id);
             }
             default -> {
                 return null;

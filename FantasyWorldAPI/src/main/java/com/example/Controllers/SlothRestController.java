@@ -26,7 +26,7 @@ public class SlothRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return SlothRestDataSQL.add(sloth);
             }
             default -> {
                 return null;
@@ -49,10 +49,9 @@ public class SlothRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return SlothRestDataSQL.getAll();
             }
             default -> {
-                System.out.println("no yupe found");
                 return null;
             }
         }
@@ -73,7 +72,7 @@ public class SlothRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return SlothRestDataSQL.findById(id);
             }
             default -> {
                 return null;
@@ -96,7 +95,7 @@ public class SlothRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return SlothRestDataSQL.update(sloth);
             }
             default -> {
                 return null;
@@ -119,7 +118,7 @@ public class SlothRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return SlothRestDataSQL.delete(id);
             }
             default -> {
                 return null;

@@ -72,7 +72,7 @@ public class TreeRestController{
                 return null;
             }
             case SQL -> {
-                return TreeRestDataSQL.findByID(id);
+                return TreeRestDataSQL.findById(id);
             }
             default -> {
                 return null;

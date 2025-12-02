@@ -1,7 +1,10 @@
 package com.example.Models;
 import java.io.Serializable;
+//import java.util.ArrayList;
 public class Jungle implements Serializable{
-    int jungleID, jungleSize, slothID, treeID;
+    int jungleID, jungleSize;
+    int slothID; //= new ArrayList<>();
+    int treeID; // = new ArrayList<>();
     String jungleName;
     public Jungle(){};
     public Jungle(int jungleID, String jungleName, int jungleSize, int slothID, int treeID){

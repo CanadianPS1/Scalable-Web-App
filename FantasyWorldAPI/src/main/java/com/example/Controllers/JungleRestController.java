@@ -26,7 +26,7 @@ public class JungleRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return JungleRestDataSQL.add(jungle);
             }
             default -> {
                 return null;
@@ -49,10 +49,9 @@ public class JungleRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return JungleRestDataSQL.getAll();
             }
             default -> {
-                System.out.println("no yupe found");
                 return null;
             }
         }
@@ -73,7 +72,7 @@ public class JungleRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return JungleRestDataSQL.findById(id);
             }
             default -> {
                 return null;
@@ -96,7 +95,7 @@ public class JungleRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return JungleRestDataSQL.update(jungle);
             }
             default -> {
                 return null;
@@ -119,7 +118,7 @@ public class JungleRestController{
                 return null;
             }
             case SQL -> {
-                return null;
+                return JungleRestDataSQL.delete(id);
             }
             default -> {
                 return null;

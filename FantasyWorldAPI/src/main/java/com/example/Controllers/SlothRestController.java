@@ -23,7 +23,7 @@ public class SlothRestController{
                 }
             }
             case JPA -> {
-                return null;
+                return null; //SlothRestDataJPA.add(sloth);
             }
             case SQL -> {
                 return SlothRestDataSQL.add(sloth);
@@ -46,7 +46,7 @@ public class SlothRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null;
+                return null; // SlothRestDataJPA.getAll();
             }
             case SQL -> {
                 return SlothRestDataSQL.getAll();
@@ -69,7 +69,7 @@ public class SlothRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null;
+                return null; // SlothRestDataJPA.findById(id);
             }
             case SQL -> {
                 return SlothRestDataSQL.findById(id);
@@ -92,7 +92,7 @@ public class SlothRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null;
+                return null; //SlothRestDataJPA.update(sloth);
             }
             case SQL -> {
                 return SlothRestDataSQL.update(sloth);
@@ -115,7 +115,7 @@ public class SlothRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null;
+                return null; // SlothRestDataJPA.delete(id);
             }
             case SQL -> {
                 return SlothRestDataSQL.delete(id);

@@ -1,7 +1,16 @@
 package com.example.Models;
 import java.io.Serializable;
+
+// import jakarta.persistence.*;
+// import java.util.HashSet;
+// import java.util.Set;
+// @Entity
+// @Table(name = "sloths")
 public class Sloth implements Serializable{
-    int slothLevel, slothID, speed;
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int slothID;
+    int slothLevel, speed;
     String name;
     public Sloth(){}
     public Sloth(int slothID, String name, int slothLevel, int speed){

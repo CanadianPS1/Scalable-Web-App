@@ -23,7 +23,7 @@ public class TreeRestController{
                 }
             }
             case JPA -> {
-                return null;
+                return null; //TreeRestDataJPA.add(tree);
             }
             case SQL -> {
                 return TreeRestDataSQL.add(tree);
@@ -46,7 +46,7 @@ public class TreeRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null;
+                return null; //TreeRestDataJPA.getAll();
             }
             case SQL -> {
                 return TreeRestDataSQL.getAll();
@@ -69,7 +69,7 @@ public class TreeRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null;
+                return null; //TreeRestDataJPA.findById(id);
             }
             case SQL -> {
                 return TreeRestDataSQL.findById(id);
@@ -92,7 +92,7 @@ public class TreeRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null;
+                return null; //TreeRestDataJPA.update(tree);
             }
             case SQL -> {
                 return TreeRestDataSQL.update(tree);
@@ -115,7 +115,7 @@ public class TreeRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null;
+                return null; //TreeRestDataJPA.delete(id);
             }
             case SQL -> {
                 return TreeRestDataSQL.delete(id);

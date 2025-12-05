@@ -1,8 +1,17 @@
 package com.example.Models;
 import java.io.Serializable;
 //import java.util.ArrayList;
+// import jakarta.persistence.*;
+// import java.util.HashSet;
+// import java.util.Set;
+// @Entity
+// @Table(name = "jungles")
 public class Jungle implements Serializable{
-    int jungleID, jungleSize;
+    //@oneToMany
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    int jungleID;
+    int jungleSize;
     int slothID; //= new ArrayList<>();
     int treeID; // = new ArrayList<>();
     String jungleName;
@@ -32,7 +41,6 @@ public class Jungle implements Serializable{
     public void setJungleName(String jungleName){
         this.jungleName = jungleName;
     }
-
     public int getSlothID(){
         return slothID;
     }

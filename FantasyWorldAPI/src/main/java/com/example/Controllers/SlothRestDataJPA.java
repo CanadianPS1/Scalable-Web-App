@@ -1,48 +1,38 @@
 package com.example.Controllers;
-
 import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.example.Models.Sloth;
-import com.example.Models.slothRepository;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.example.Models.*;
+@RestController
+@RequestMapping("/sloths")
 public class SlothRestDataJPA {
+    @Autowired
+    private SlothRepository slothRepository;
+    @Autowired
+    private TreeRepository treeRepository;
+    @SuppressWarnings("null")
     @PostMapping
-    public Sloth create(@RequestBody Sloth sloth){
-        return slothRepository.save(sloth);
-    }    
+    public Sloth create(@RequestBody Sloth sloth){return slothRepository.save(sloth);}
     @GetMapping
-    public List<Sloth> getAll(){
-        return slothRepository.findAll();
-    }
+    public List<Sloth> getAll(){return slothRepository.findAll();}
+    @SuppressWarnings("null")
     @GetMapping("/{id}")
-    public Sloth getOne(@PathVariable Integer id){
-        return slothRepository.findById(id).orElse(null);
-    }
+    public Sloth getOne(@PathVariable Integer id){return slothRepository.findById(id).orElse(null);}
+    @SuppressWarnings("null")
     @PutMapping("/{id}")
-    public Sloth update(@PathVariable Integer Id, @RequestBody Sloth sloth){
-        sloth.setId(Id);
-        return slothRepository.save(sloth);
-    }
-    @DeleteMapping("/{id")
-    public void delete(@PathVariable Integer id){
-        SlothRepository.deleteById(id);
-    }
-    @PutMapping("/{slothId}/tree/{treeID}")
-    public Sloth assignToTree(@PathVariable Integer slothId, @PathVariable Integer treeId) {
-        Sloth sloth = slothRepository.findById(slothId).orElse(null);
-        Tree tree = TreeRepository.findById(treeId).orElse(null);
-       
-        if (sloth != null && tree != null) {
-            sloth.setDepartment(tree);
+    public Sloth update(@PathVariable Integer id, @RequestBody Sloth sloth){return slothRepository.save(sloth);}
+    @SuppressWarnings("null")
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id){slothRepository.deleteById(id);}
+    @PutMapping("/{slothID}/tree/{treeID}")
+    public Sloth assignToTree(@PathVariable Integer slothID, @PathVariable Integer treeID) {
+        @SuppressWarnings("null")
+        Sloth sloth = slothRepository.findById(slothID).orElse(null);
+        @SuppressWarnings("null")
+        Tree tree = treeRepository.findById(treeID).orElse(null);
+        if(sloth != null && treeID != null){
+            sloth.setTree(tree);
             return slothRepository.save(sloth);
-        }
-        return null;
+        }return null;
     }
 }

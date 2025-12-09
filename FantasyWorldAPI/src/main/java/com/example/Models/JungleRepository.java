@@ -1,3 +1,3 @@
 package com.example.Models;
 import org.springframework.data.jpa.repository.JpaRepository;
-public interface jungleRepository extends JpaRepository<Jungle, Integer> {}
+public interface JungleRepository extends JpaRepository<Jungle, Integer> {}

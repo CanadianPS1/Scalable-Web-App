@@ -23,7 +23,9 @@ public class TreeRestDataJPA {
     public Tree findById(@PathVariable Integer id){return treeRepository.findById(id).orElse(null);}
     @SuppressWarnings("null")
     @PutMapping("/{id}")
-    public Tree update(@RequestBody Tree tree){return treeRepository.save(tree);}
+    public Tree update(@RequestBody Tree tree, @PathVariable Integer id){
+        return treeRepository.save(tree);
+    }
     @SuppressWarnings("null")
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Integer id){

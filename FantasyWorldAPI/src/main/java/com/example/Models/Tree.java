@@ -2,15 +2,23 @@ package com.example.Models;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
 @Entity
 @Table(name = "trees")
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class,
+  property = "treeID"
+)
 public class Tree implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int treeID;
-    @ManyToOne
-    @JoinColumn(name = "slothId")
+    @ManyToOne()
+    @JoinColumn(name = "slothID")
     private Sloth slothID;
     @ManyToMany(mappedBy = "treeID")
     private Set<Jungle> jungles = new HashSet<>();

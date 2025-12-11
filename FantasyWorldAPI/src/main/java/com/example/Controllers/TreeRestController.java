@@ -51,14 +51,14 @@ public class TreeRestController{
         }return null;
     }
     @RequestMapping(path = "", method = RequestMethod.PUT)
-    public Tree updateById(@RequestBody Tree tree){
+    public Tree updateById(@RequestBody Tree tree, @PathVariable Integer id){
         switch(Settings.dbStatus){
             case ARRAYLIST -> {return TreeRestDataArrayList.update(tree);}
             case JSON -> {
                 try{return TreeRestDataJSON.update(tree);}
                 catch(IOException e){}
             }
-            case JPA -> {return treeRestDataJPA.update(tree);}
+            case JPA -> {return treeRestDataJPA.update(tree, id);}
             case SQL -> {return TreeRestDataSQL.update(tree);}
             default -> {return null;}
         }return null;

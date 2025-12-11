@@ -2,6 +2,9 @@ package com.example.Models;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 @Entity
 @Table(name = "sloths")
@@ -9,7 +12,7 @@ public class Sloth implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int slothID;
-    @OneToMany(mappedBy = "slothID")
+    @OneToMany(mappedBy = "slothID", cascade = CascadeType.ALL)
     private Set<Tree> treeID = new HashSet<>();
     @ManyToMany
     @JoinTable(

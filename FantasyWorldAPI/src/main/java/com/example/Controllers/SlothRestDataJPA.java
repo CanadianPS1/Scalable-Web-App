@@ -23,7 +23,10 @@ public class SlothRestDataJPA {
     public Sloth findById(@PathVariable Integer id){return slothRepository.findById(id).orElse(null);}
     @SuppressWarnings("null")
     @PutMapping("/{id}")
-    public Sloth update(@RequestBody Sloth sloth){return slothRepository.save(sloth);}
+    public Sloth update(@RequestBody Sloth sloth, @PathVariable int id){
+        sloth.setSlothID(id);
+        return slothRepository.save(sloth);
+    }
     @SuppressWarnings("null")
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Integer id){

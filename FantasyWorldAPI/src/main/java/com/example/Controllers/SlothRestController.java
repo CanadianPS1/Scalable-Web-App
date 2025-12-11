@@ -52,15 +52,15 @@ public class SlothRestController{
             default -> {return null;}
         }return null;
     }
-    @RequestMapping(path = "", method = RequestMethod.PUT)
-    public Sloth updateById(@RequestBody Sloth sloth){
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public Sloth updateById(@RequestBody Sloth sloth, @PathVariable Integer id){
         switch(Settings.dbStatus){
             case ARRAYLIST -> {return SlothRestDataArrayList.update(sloth);}
             case JSON -> {
                 try{return SlothRestDataJSON.update(sloth);}
                 catch(IOException e){}
             }
-            case JPA -> {return slothRestDataJPA.update(sloth);}
+            case JPA -> {return slothRestDataJPA.update(sloth, id);}
             case SQL -> {return SlothRestDataSQL.update(sloth);}
             default -> {return null;}
         }return null;

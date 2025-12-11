@@ -12,18 +12,24 @@ public class SlothRestDataJPA {
     private TreeRepository treeRepository;
     @SuppressWarnings("null")
     @PostMapping
-    public Sloth create(@RequestBody Sloth sloth){return slothRepository.save(sloth);}
+    public String add(@RequestBody Sloth sloth){
+        slothRepository.save(sloth);
+        return "Sloth Created";
+    }
     @GetMapping
     public List<Sloth> getAll(){return slothRepository.findAll();}
     @SuppressWarnings("null")
     @GetMapping("/{id}")
-    public Sloth getOne(@PathVariable Integer id){return slothRepository.findById(id).orElse(null);}
+    public Sloth findById(@PathVariable Integer id){return slothRepository.findById(id).orElse(null);}
     @SuppressWarnings("null")
     @PutMapping("/{id}")
-    public Sloth update(@PathVariable Integer id, @RequestBody Sloth sloth){return slothRepository.save(sloth);}
+    public Sloth update(@RequestBody Sloth sloth){return slothRepository.save(sloth);}
     @SuppressWarnings("null")
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id){slothRepository.deleteById(id);}
+    public String delete(@PathVariable Integer id){
+        slothRepository.deleteById(id);
+        return "Sloth Deleted";
+    }
     @PutMapping("/{slothID}/tree/{treeID}")
     public Sloth assignToTree(@PathVariable Integer slothID, @PathVariable Integer treeID) {
         @SuppressWarnings("null")

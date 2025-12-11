@@ -13,7 +13,12 @@ public class Jungle implements Serializable{
     private String jungleName;
     @ManyToMany(mappedBy = "jungles")
     private Set<Sloth> slothID = new HashSet<>();
-    @ManyToMany(mappedBy = "jungles")
+    @ManyToMany
+    @JoinTable(
+        name = "jungleTree",
+        joinColumns = @JoinColumn(name = "jungleId"),
+        inverseJoinColumns = @JoinColumn(name = "treeId")
+    )
     private Set<Tree> treeID = new HashSet<>();
     public Jungle(){};
     public Jungle(int jungleID, String jungleName, int jungleSize, Set<Sloth> slothID, Set<Tree> treeID){

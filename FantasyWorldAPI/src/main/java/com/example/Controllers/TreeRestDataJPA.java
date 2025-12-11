@@ -12,18 +12,24 @@ public class TreeRestDataJPA {
     private TreeRepository treeRepository;
     @SuppressWarnings("null")
     @PostMapping
-    public Tree create(@RequestBody Tree tree){return treeRepository.save(tree);}
+    public String add(@RequestBody Tree tree){
+        treeRepository.save(tree);
+        return "Tree Added";
+    }
     @GetMapping
     public List<Tree> getAll(){return treeRepository.findAll();}
     @SuppressWarnings("null")
     @GetMapping("/{id}")
-    public Tree getOne(@PathVariable Integer id){return treeRepository.findById(id).orElse(null);}
+    public Tree findById(@PathVariable Integer id){return treeRepository.findById(id).orElse(null);}
     @SuppressWarnings("null")
     @PutMapping("/{id}")
-    public Tree update(@PathVariable Integer id, @RequestBody Tree tree){return treeRepository.save(tree);}
+    public Tree update(@RequestBody Tree tree){return treeRepository.save(tree);}
     @SuppressWarnings("null")
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id){treeRepository.deleteById(id);}
+    public String delete(@PathVariable Integer id){
+        treeRepository.deleteById(id);
+        return "Tree Deleted";
+    }
     @PutMapping("/{TreeID}/sloth/{slothID}")
     public Tree assignToSloth(@PathVariable Integer treeID, @PathVariable Integer slothID) {
         @SuppressWarnings("null")

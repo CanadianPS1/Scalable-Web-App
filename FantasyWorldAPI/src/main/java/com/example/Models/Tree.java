@@ -1,15 +1,19 @@
 package com.example.Models;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import jakarta.persistence.*;
 @Entity
 @Table(name = "trees")
 public class Tree implements Serializable{
     @Id
-    @OneToOne(mappedBy = "sloths")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int treeID;
-    @OneToOne(mappedBy = "sloths")
-    Sloth slothID;
+    @ManyToOne
+    @JoinColumn(name = "slothId")
+    private Sloth slothID;
+    @ManyToMany(mappedBy = "treeID")
+    private Set<Jungle> jungles = new HashSet<>();
     int age;
     String treeType;
     public Tree(){}

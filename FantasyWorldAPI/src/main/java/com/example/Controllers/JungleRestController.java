@@ -23,7 +23,7 @@ public class JungleRestController{
                 }
             }
             case JPA -> {
-                return null; //JungleRestDataJPA.add(jungle);
+                return JungleRestDataJPA.add(jungle);
             }
             case SQL -> {
                 return JungleRestDataSQL.add(jungle);
@@ -46,7 +46,7 @@ public class JungleRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null; //JungleRestDataJPA.getAll();
+                return JungleRestDataJPA.getAll();
             }
             case SQL -> {
                 return JungleRestDataSQL.getAll();
@@ -69,7 +69,7 @@ public class JungleRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null; //JungleRestDataJPA.findById(id);
+                return JungleRestDataJPA.findById(id);
             }
             case SQL -> {
                 return JungleRestDataSQL.findById(id);
@@ -92,7 +92,7 @@ public class JungleRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null; //JungleRestDataJPA.update(jungle);
+                return JungleRestDataJPA.update(jungle);
             }
             case SQL -> {
                 return JungleRestDataSQL.update(jungle);
@@ -115,7 +115,7 @@ public class JungleRestController{
                 }catch(IOException e){}
             }
             case JPA -> {
-                return null; //JungleRestDataJPA.delete(id);
+                return JungleRestDataJPA.delete(id);
             }
             case SQL -> {
                 return JungleRestDataSQL.delete(id);

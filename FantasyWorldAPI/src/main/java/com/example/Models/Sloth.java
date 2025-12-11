@@ -7,12 +7,19 @@ import jakarta.persistence.*;
 @Table(name = "sloths")
 public class Sloth implements Serializable{
     @Id
-    @OneToMany(mappedBy = "trees")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int slothID;
-    @ManyToMany(mappedBy = "sloths")
+    @OneToMany(mappedBy = "slothID")
     private Set<Tree> treeID = new HashSet<>();
-    int slothLevel, speed;
+    @ManyToMany
+    @JoinTable(
+        name = "slothJungle",
+        joinColumns = @JoinColumn(name = "slothId"),
+        inverseJoinColumns = @JoinColumn(name = "jungleId")
+    )
+    private Set<Jungle> jungles = new HashSet<>();
+    int slothLevel;
+    int speed;
     String name;
     public Sloth(){}
     public Sloth(int slothID, String name, int slothLevel, int speed, Set<Tree> treeID){
